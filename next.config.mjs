@@ -1,4 +1,3 @@
-import { withPayload } from '@payloadcms/next/withPayload';
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
@@ -11,4 +10,4 @@ const withBundleAnalyzer =  NextBundleAnalyzer({
  
 // module.exports = withBundleAnalyzer(nextConfig)
 
-export default withBundleAnalyzer(withPayload(nextConfig, { devBundleServerPackages: false }));
+export default withBundleAnalyzer(nextConfig, { devBundleServerPackages: false });

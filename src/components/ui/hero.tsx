@@ -1,12 +1,11 @@
 // components/sections/Hero.tsx
 
-import type { ReactNode } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { H, P } from './typography';
-import { Section } from './section';
-import { Container } from './container';
+import type { ReactNode } from 'react';
 import { Button } from './button';
+import { H, P } from './typography';
+import classes from '../../app/home.module.css'
+
 
 interface HeroProps {
   title: string;
@@ -19,6 +18,8 @@ interface HeroProps {
   secondaryButton?: {
     text: string;
     href: string;
+    icon?: ReactNode;
+
   };
   image?: {
     src: string;
@@ -35,64 +36,46 @@ export function Hero({
   description,
   primaryButton,
   secondaryButton,
-  image,
-  className = '',
-  variant = 'default',
 }: HeroProps) {
   return (
-    <Section className={`bg-background ${className}`}>
-      <Container className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-        <div
-          className={`mr-auto place-self-center lg:col-span-7 ${
-            variant === 'reversed' ? 'lg:order-last' : ''
-          }`}
-        >
-          <H level="h1" className="">
-            {title}
-          </H>
+    <div className="flex flex-col justify-between h-full  max-w-screen-xl py-8 mx-auto gap-8 lg:py-16 ">
+      <div
+        className={
+          `flex flex-col justify-center gap-4 lg:mr-auto bg-background/15 backdrop-blur-lg p-6 md:p-8 lg:p-10 rounded-3xl w-full h-full border border-accent/50 lg:w-1/2 animate-appear`
+        }
+      >
+        <H level="h1" className="text-primary-foreground mb-4 w-full">
+          {title}
+        </H>
 
-          <P size={'lg'} className="">
-            {description}
-          </P>
+        <P margin={'default'} size={'lg'} className="text-primary-foreground">
+          {description}
+        </P>
 
-          <div className="flex flex-wrap gap-4">
-            {primaryButton && (
-              <Button asChild variant={'default'}>
-                <Link href={primaryButton.href} className="">
-                  {primaryButton.text}
-                  {primaryButton.icon && (
-                    <span className="">{primaryButton.icon}</span>
-                  )}
-                </Link>
-              </Button>
-            )}
+        <div className="flex flex-wrap gap-4">
+          {primaryButton && (
+            <Button size={'lg'} asChild variant={'default'} className='w-full lg:w-auto'>
+              <Link href={primaryButton.href} className="">
+                {primaryButton.text}
+                {primaryButton.icon && (
+                  <span className="">{primaryButton.icon}</span>
+                )}
+              </Link>
+            </Button>
+          )}
 
-            {secondaryButton && (
-              <Button asChild variant={'secondary'}>
-                <Link href={secondaryButton.href} className="">
-                  {secondaryButton.text}
-                </Link>
-              </Button>
-            )}
-          </div>
+          {secondaryButton && (
+            <Button size={'lg'} asChild variant={'secondary'} className='w-full lg:w-auto'>
+              <Link href={secondaryButton.href} className="">
+                {secondaryButton.text}
+                {secondaryButton.icon && (
+                  <span className="">{secondaryButton.icon}</span>
+                )}
+              </Link>
+            </Button>
+          )}
         </div>
-
-        {image && (
-          <div
-            className={`hidden lg:mt-0 lg:col-span-5 lg:flex ${
-              variant === 'reversed' ? 'lg:order-first' : ''
-            }`}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              height={image.height}
-              width={image.width}
-              className="w-full h-auto object-contain"
-            />
-          </div>
-        )}
-      </Container>
-    </Section>
+      </div>
+    </div>
   );
 }

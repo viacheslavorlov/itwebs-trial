@@ -1,0 +1,69 @@
+.img {
+  animation: floating 12s linear infinite;
+}
+
+@media screen and (max-width: 1024px) {
+  .img {
+    animation: floating-mobile 30s linear infinite;
+  }
+}
+
+.card {
+  animation: appear 1s linear;
+}
+@keyframes appear {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 100;
+  }
+}
+
+@keyframes floating {
+  0% {
+    rotate: 0;
+    scale: 1.1;
+  }
+  25% {
+    rotate: 0.5deg;
+    scale: 1.11;
+  }
+  50% {
+    rotate: 0deg;
+    scale: 1.12;
+  }
+  75% {
+    rotate: -0.5deg;
+    scale: 1.11;
+  }
+  100% {
+    rotate: 0;
+    scale: 1.1;
+  }
+}
+
+@keyframes floating-mobile {
+  0% {
+    rotate: 0;
+    scale: 1;
+  }
+  25% {
+    rotate: 1.5deg;
+    scale: 1.11;
+  }
+  50% {
+    rotate: 0deg;
+    scale: 1.05;
+  }
+  75% {
+    rotate: -1.5deg;
+    scale: 1.11;
+  }
+  100% {
+    rotate: 0;
+    scale: 1;
+  }
+}

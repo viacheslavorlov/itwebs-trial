@@ -5,6 +5,7 @@ interface ContainerProps {
   maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
   xPadding?: string;
   className?: string;
+  as?: 'div' | 'header' | 'footer' | 'section' | 'nav';
 }
 
 export const Container = ({
@@ -12,6 +13,7 @@ export const Container = ({
   maxWidth = 'xl',
   xPadding = 'px-4 sm:px-6 lg:px-8',
   className = '',
+  as: Component = 'div',
 }: ContainerProps) => {
   const maxWidthClasses = {
     xs: 'max-w-xs',
@@ -24,10 +26,10 @@ export const Container = ({
   };
 
   return (
-    <div
+    <Component
       className={`mx-auto ${maxWidthClasses[maxWidth]} ${xPadding} ${className}`}
     >
       {children}
-    </div>
+    </Component>
   );
 };
