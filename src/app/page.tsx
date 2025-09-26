@@ -9,9 +9,11 @@ import { api } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import classes from './home.module.css'
+import { PhotoCard } from '@/components/products/products-card';
 
 export default async function HomePage() {
-  const data = await api.products.getAll({ limit: 2 });
+  const data = await api.photos.getAll({ _limit: 3 });
+  console.log(data)
 
   if ('error' in data) return notFound()
 
@@ -49,7 +51,11 @@ export default async function HomePage() {
     </Section>
     <Section>
       <Container>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full items-center justify-center'>
+          {data.map(photo => (
+            <PhotoCard key={photo.id} photo={photo} />
+          ))}
+        </div>
       </Container>
     </Section>
 

@@ -1,4 +1,4 @@
-import { Product } from "@/app/types/api";
+import { Product } from "@/types/api";
 import { fetchProducts } from "@/lib/api";
 
 export const revalidate = 60

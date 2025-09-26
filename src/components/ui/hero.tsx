@@ -1,11 +1,7 @@
-// components/sections/Hero.tsx
-
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Button } from './button';
 import { H, P } from './typography';
-import classes from '../../app/home.module.css'
-
 
 interface HeroProps {
   title: string;

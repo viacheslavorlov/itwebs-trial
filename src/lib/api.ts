@@ -4,23 +4,19 @@ import {
     ApiResult,
     CommonQueryParams,
     Endpoint,
-    Order,
-    OrdersQueryParams,
-    Product,
-    ProductsQueryParams,
-    Review,
-    ReviewsQueryParams,
+    Photo,
+    Posts,
     User,
     UsersQueryParams
-} from '@/app/types/api';
+} from '@/types/api';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 
-const BASE_URL = process.env.API_URL || 'https://fakeapi.net';
+const BASE_URL = process.env.API_URL || 'https://jsonplaceholder.typicode.com/';
 
 export async function fetchFromApi<T>(
     endpoint: Endpoint,
-    params?: CommonQueryParams | ProductsQueryParams | OrdersQueryParams | ReviewsQueryParams
+    params?: CommonQueryParams
 ): Promise<ApiResult<T>> {
     try {
         const url = `${BASE_URL}${endpoint}`;
@@ -32,13 +28,13 @@ export async function fetchFromApi<T>(
 
         if (res.status >= 400) {
             const errorData = res.data as ApiError;
-            console.error(`API Error ${res.status}:`, errorData.message);
+            console.error(`Ошибка API ${res.status}:`, errorData.message);
             return { error: errorData.message || `HTTP Error ${res.status}` };
         }
 
         if (!res.data) {
-            console.error('No data received from API');
-            return { error: 'No data received' };
+            console.error('Данные не получены от API');
+            return { error: 'Данных не получено' };
         }
 
         return res.data;
@@ -47,37 +43,29 @@ export async function fetchFromApi<T>(
             const axiosError = error as AxiosError<ApiError>;
 
             if (axiosError.response?.data?.message) {
-                console.error('API Error:', axiosError.response.data.message);
+                console.error('Ошибка API:', axiosError.response.data.message);
                 return { error: axiosError.response.data.message };
             }
 
             if (axiosError.code === 'NETWORK_ERROR') {
-                console.error('Network error:', axiosError.message);
-                return { error: 'Network connection failed' };
+                console.error('Сетевая ошибка:', axiosError.message);
+                return { error: 'Сетевая ошибка' };
             }
         }
 
-        console.error('Unexpected error:', error);
-        return { error: 'An unexpected error occurred' };
+        console.error('Непредвиденная ошибка:', error);
+        return { error: 'Непредвиденная ошибка' };
     }
 }
 
 export const api = {
-    products: {
-        getAll: (params?: ProductsQueryParams) =>
-            fetchFromApi<ApiListResponse<Product>>('/products', params),
+    photos: {
+        getAll: (params?: CommonQueryParams) =>
+            fetchFromApi<ApiListResponse<Photo>>('/photos', params),
 
         getById: (id: number) =>
-            fetchFromApi<Product>(`/products/${id}`),
+            fetchFromApi<Photo>(`/photos/${id}`),
 
-        getCategories: () =>
-            fetchFromApi<string[]>('/products/categories'),
-
-        getByCategory: (category: string) =>
-            fetchFromApi<ApiListResponse<Product>>(`/products/category/${category}`),
-
-        getReviews: (productId: number) =>
-            fetchFromApi<ApiListResponse<Review>>(`/products/${productId}/reviews`),
     },
 
     users: {
@@ -86,21 +74,15 @@ export const api = {
 
         getById: (id: number) =>
             fetchFromApi<User>(`/users/${id}`),
-
-        getOrders: (userId: number) =>
-            fetchFromApi<ApiListResponse<Order>>(`/users/${userId}/orders`),
     },
 
-    orders: {
-        getAll: (params?: OrdersQueryParams) =>
-            fetchFromApi<ApiListResponse<Order>>('/orders', params),
+    posts: {
+        getAll: (params?: CommonQueryParams) =>
+            fetchFromApi<ApiListResponse<Posts>>('/posts', params),
 
         getById: (id: number) =>
-            fetchFromApi<Order>(`/orders/${id}`),
+            fetchFromApi<Posts>(`/posts/${id}`),
     },
 
-    reviews: {
-        getAll: (params?: ReviewsQueryParams) =>
-            fetchFromApi<ApiListResponse<Review>>('/reviews', params),
-    },
+
 };
