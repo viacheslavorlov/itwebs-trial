@@ -14,7 +14,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en">
-      <body className='overflow-x-hidden'>
+      <body className='overflow-x-hidden pb-14'>
         <Header />
         <main>{children}</main>
         <MobileMenu />

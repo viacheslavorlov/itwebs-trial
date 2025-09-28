@@ -5,8 +5,8 @@ const nextConfig = {
   // Your Next.js config here
   images: {
     remotePatterns: [
-      new URL('https://fakeapi.net/images/**'),
-      new URL('https://via.placeholder.com/**'),
+      new URL('https://rickandmortyapi.com/api/**'),
+      // new URL('https://via.placeholder.com/**'),
       new URL('http://localhost:3001/**'),
     ],
   },

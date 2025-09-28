@@ -3,9 +3,9 @@ import { Section } from "@/components/ui/section";
 import { api } from "@/lib/api";
 import { notFound } from "next/navigation";
 
-export default async function ProductSPage({ searchParams }: { searchParams: Promise<{ page: string }> }) {
+export default async function LocationsPage({ searchParams }: { searchParams: Promise<{ page: string }> }) {
     const { page } = await searchParams
-    const response = await api.photos.getAll({ _page: +page || 1, _limit: 4 });
+    const response = await api.locations.getAll({ page: +page || 1 });
     console.log(response);
     if ('error' in response || !response) return notFound()
 

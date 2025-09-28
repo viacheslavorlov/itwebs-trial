@@ -1,71 +1,96 @@
+import axios, { AxiosError } from 'axios';
 
-export interface CommonQueryParams {
-    _page?: number;
-    _limit?: number;
-    _sort?: string;
-    _order?: 'asc' | 'desc';
-}
+const BASE_URL = process.env.API_URL || 'https://rickandmortyapi.com/api';
 
-
-export type UsersQueryParams = CommonQueryParams;
-
-export type ApiListResponse<T> = T[];
-
-export interface Photo {
-    albumId: number,
-    id: number,
-    title: string,
-    url: string,
-    thumbnailUrl: string
-}
-
-export interface User {
+// ============ BASE TYPES ============
+export interface ResourceBase {
     id: number;
-    email: string;
-    username: string;
     name: string;
-
-    address: {
-        street: string;
-        city: string;
-        suite: string;
-        zipcode: string;
-        geo: {
-            lat: string;
-            lng: string;
-        }
-    };
-    phone: string;
-    website: string;
-    company: {
-        name: string;
-        catchPhrase: string;
-        bs: string;
-    };
+    url: string;
+    created: string;
 }
 
-export interface Posts {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
+export interface CharacterLocation {
+    name: string;
+    url: string;
 }
 
+export interface Info {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+}
+
+// ============ CHARACTER TYPES ============
+export interface Character extends ResourceBase {
+    status: 'Dead' | 'Alive' | 'unknown';
+    species: string;
+    type: string;
+    gender: 'Female' | 'Male' | 'Genderless' | 'unknown';
+    origin: CharacterLocation;
+    location: CharacterLocation;
+    image: string;
+    episode: string[];
+}
+
+export interface CharacterFilter {
+    name?: string;
+    type?: string;
+    species?: string;
+    status?: 'Dead' | 'Alive' | 'unknown';
+    gender?: 'Female' | 'Male' | 'Genderless' | 'unknown';
+    page?: number;
+}
+
+export interface CharacterListResponse {
+    info: Info;
+    results: Character[];
+}
+
+// ============ LOCATION TYPES ============
+export interface Location extends ResourceBase {
+    type: string;
+    dimension: string;
+    residents: string[];
+}
+
+export interface LocationFilter {
+    name?: string;
+    type?: string;
+    dimension?: string;
+    page?: number;
+}
+
+export interface LocationListResponse {
+    info: Info;
+    results: Location[];
+}
+
+// ============ EPISODE TYPES ============
+export interface Episode extends ResourceBase {
+    air_date: string;
+    episode: string;
+    characters: string[];
+}
+
+export interface EpisodeFilter {
+    name?: string;
+    episode?: string;
+    page?: number;
+}
+
+export interface EpisodeListResponse {
+    info: Info;
+    results: Episode[];
+}
+
+// ============ RESPONSE TYPES ============
 export interface ApiError {
-    error: string;
     message: string;
+    error: string;
 }
 
-
-// Success/Error union type
-export type ApiResult<T> = T | { error: string };
-
-// Endpoint configuration
-export type Endpoint =
-    | '/photos'
-    | `/photos/${number}`
-    | '/users'
-    | `/users/${number}`
-    | `/users/${number}/posts`
-    | '/posts'
-    | `/posts/${number}`;
+export type ApiResponse<T> =
+    | { success: true; data: T }
+    | { success: false; error: string; status?: number };
