@@ -1,8 +1,3 @@
-import axios, { AxiosError } from 'axios';
-
-const BASE_URL = process.env.API_URL || 'https://rickandmortyapi.com/api';
-
-// ============ BASE TYPES ============
 export interface ResourceBase {
     id: number;
     name: string;
@@ -12,17 +7,16 @@ export interface ResourceBase {
 
 export interface CharacterLocation {
     name: string;
-    url: string;
+    url?: string;
 }
 
 export interface Info {
-    count: number;
+    count: number; //total count of requestet objects
     pages: number;
     next: string | null;
     prev: string | null;
 }
 
-// ============ CHARACTER TYPES ============
 export interface Character extends ResourceBase {
     status: 'Dead' | 'Alive' | 'unknown';
     species: string;
@@ -48,11 +42,10 @@ export interface CharacterListResponse {
     results: Character[];
 }
 
-// ============ LOCATION TYPES ============
 export interface Location extends ResourceBase {
-    type: string;
-    dimension: string;
-    residents: string[];
+    type?: string;
+    dimension?: string;
+    residents?: string[];
 }
 
 export interface LocationFilter {
@@ -67,7 +60,6 @@ export interface LocationListResponse {
     results: Location[];
 }
 
-// ============ EPISODE TYPES ============
 export interface Episode extends ResourceBase {
     air_date: string;
     episode: string;
@@ -85,7 +77,6 @@ export interface EpisodeListResponse {
     results: Episode[];
 }
 
-// ============ RESPONSE TYPES ============
 export interface ApiError {
     message: string;
     error: string;

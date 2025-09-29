@@ -40,11 +40,11 @@ export function Hero({
           `flex flex-col justify-center gap-4 lg:mr-auto bg-background/15 backdrop-blur-lg p-6 md:p-8 lg:p-10 rounded-3xl w-full h-full border border-accent/50 lg:w-1/2 animate-appear`
         }
       >
-        <H level="h1" className="text-primary-foreground mb-4 w-full">
+        <H level="h1" className="mb-4 w-full">
           {title}
         </H>
 
-        <P margin={'default'} size={'lg'} className="text-primary-foreground">
+        <P margin={'default'} size={'lg'} className="">
           {description}
         </P>
 

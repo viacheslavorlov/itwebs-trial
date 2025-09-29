@@ -26,7 +26,7 @@ const headingVariants = cva('font-sans font-semibold tracking-tight', {
 
 interface HeadingProps
   extends React.HTMLAttributes<HTMLHeadingElement>,
-    VariantProps<typeof headingVariants> {
+  VariantProps<typeof headingVariants> {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   children: ReactNode;
 }
@@ -49,7 +49,7 @@ export const H = forwardRef<HTMLHeadingElement, HeadingProps>(
 );
 H.displayName = 'Heading';
 
-const paragraphVariants = cva('font-sans text-muted-foreground', {
+const paragraphVariants = cva('font-sans', {
   variants: {
     size: {
       default: 'text-base',
@@ -81,7 +81,7 @@ const paragraphVariants = cva('font-sans text-muted-foreground', {
 
 interface ParagraphProps
   extends React.HTMLAttributes<HTMLParagraphElement>,
-    VariantProps<typeof paragraphVariants> {
+  VariantProps<typeof paragraphVariants> {
   as?: 'p' | 'div' | 'span';
 }
 

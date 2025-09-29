@@ -11,9 +11,12 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import classes from './home.module.css';
 import { AutoplayCarousel } from '@/components/ui/autoplay-carousel';
+import { Aurora } from '@/components/ui/aurora';
+import { H, P } from '@/components/ui/typography';
 
 export default async function HomePage() {
   const data = await api.characters.getAll()
+  console.log('data', data);
 
   if (!data.success) return notFound()
 
@@ -28,12 +31,14 @@ export default async function HomePage() {
           className={cn("absolute scale-110 top-0 bottom-0 left-0 right-0 w-full h-full -z-10 object-cover", classes.img)}
         />
         <Container>
+          <Aurora />
+
           <Hero
             title={"Тест для ITWEBS"}
-            description={"Посмотрите на странную желтую штуку"}
+            description={"Статически сгенерированная страница"}
             primaryButton={{
-              text: 'К товарам',
-              href: '/products',
+              text: 'К локациям',
+              href: '/locations',
               icon: <ArrowRight />,
             }}
             secondaryButton={{
@@ -52,12 +57,9 @@ export default async function HomePage() {
       </Section>
       <Section>
         <Container>
-          <AutoplayCarousel items={data.data.results} autoplay />
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full items-center justify-center'>
-            {/* {data.data.results.map(character => (
-              <CharacterCard key={character.id} character={character} />
-            ))} */}
-          </div>
+          <H>Кастомизированная карусель shadcn/ui</H>
+          <P>Добавлены точки навигации, автоплей или автоскрол на выбор</P>
+          <AutoplayCarousel items={data.data.results} autoplay dots={{ enabled: true }} />
         </Container>
       </Section>
 

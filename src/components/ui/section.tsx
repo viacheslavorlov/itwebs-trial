@@ -14,7 +14,7 @@ export const Section = ({
   as: Component = 'section',
 }: SectionProps) => {
   return (
-    <Component className={`w-full ${yPadding} ${className}`}>
+    <Component className={`w-full  ${yPadding} ${className}`}>
       {children}
     </Component>
   );

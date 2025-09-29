@@ -51,7 +51,6 @@ class ApiClient {
         }
     }
 
-    // ============ CHARACTER ENDPOINTS ============
     async getCharacters(params?: CharacterFilter): Promise<ApiResponse<CharacterListResponse>> {
         return this.makeRequest<CharacterListResponse>(`${BASE_URL}/character`, params);
     }

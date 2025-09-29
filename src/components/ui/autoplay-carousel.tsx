@@ -13,6 +13,7 @@ import { Character } from "@/types/api";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Autoplay from "embla-carousel-autoplay";
 import { CharacterCard } from "../character/character-card";
+import { Button } from "./button";
 
 
 
@@ -149,8 +150,8 @@ export function AutoplayCarousel({
   items,
   className,
   loop = false,
-  autoplay = false,
-  autoscroll = false,
+  autoplay: autoplayProp = false,
+  autoscroll: autoscrollProp = false,
   orientation = "horizontal",
   plugins = [],
   onSlideChange,
@@ -161,6 +162,8 @@ export function AutoplayCarousel({
 }: ReusableCarouselProps) {
   const [api, setApi] = React.useState<CarouselApi | null>(null);
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [autoplay, setAutoplay] = React.useState(autoplayProp)
+  const [autoscroll, setAutoscroll] = React.useState(autoscrollProp)
 
   // Handle slide changes
   React.useEffect(() => {
@@ -190,7 +193,7 @@ export function AutoplayCarousel({
       const autoplayConfig =
         typeof autoplay === "object"
           ? autoplay
-          : { delay: 3000, stopOnInteraction: false, stopOnMouseEnter: false };
+          : { delay: 2000, stopOnInteraction: false, stopOnMouseEnter: false };
       result.push(Autoplay(autoplayConfig));
     }
 
@@ -213,6 +216,23 @@ export function AutoplayCarousel({
       isActive={currentSlide === index}
     />
   );
+  const onToggleAutoplay = () => {
+    if (autoplay) {
+      setAutoplay(false)
+    } else {
+      setAutoscroll(false)
+      setAutoplay(true)
+    }
+  }
+
+  const onToggleAutoscroll = () => {
+    if (autoscroll) {
+      setAutoscroll(false)
+    } else {
+      setAutoplay(false)
+      setAutoscroll(true)
+    }
+  }
 
   const itemRenderer = renderItem || defaultRenderItem;
 
@@ -259,16 +279,17 @@ export function AutoplayCarousel({
           activeDotClassName={dots.activeDotClassName}
         />
       )}
+
+      <div className="flex gap-2 px-2 mt-10">
+        <Button className="w-1/2 lg:w-auto" onClick={onToggleAutoplay}>автоплей</Button>
+        <Button className="w-1/2 lg:w-auto" onClick={onToggleAutoscroll}>автоскролл</Button>
+      </div>
     </div>
   );
 }
 
 // ===== DEFAULT ITEM COMPONENT =====
-interface ItemComponentProps {
-  id: number;
-  title: string;
-  isActive?: boolean;
-}
+
 
 /**
  * Default carousel item component

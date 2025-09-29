@@ -5,29 +5,11 @@ export const menu = [
         label: 'Главная', href: '/', icon: Home
     },
     {
-        label: 'Продукты', href: '/products', icon: List
+        label: 'Локации', href: '/locations', icon: List
     },
     {
         label: 'Контакты', href: '/contacts', icon: PhoneCall
     },
-]
-
-export const footerMenu = [
-    {
-        label: 'Политика конфиденциальности', href: '/privacy'
-    },
-    {
-        label: 'Пользовательское соглашение', href: '/terms'
-    },
-]
-
-export const socialMenu = [
-    {
-        label: 'Telegram', href: 'https://t.me/itwebs'
-    },
-    {
-        label: 'GitHub', href: 'https://github.com/viacheslavorlov'
-    }
 ]
 
 export const PHONE_NUMBER = '+7 (999) 999-99-99'
